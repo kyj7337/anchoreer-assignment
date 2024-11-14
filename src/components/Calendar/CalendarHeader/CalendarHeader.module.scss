@@ -1,12 +1,16 @@
 @use '@/style' as alias;
 
 .headerContainer {
+  background-color: alias.$tableBg;
+  position: sticky;
+  top: 0px;
+}
+.navBar {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 14px;
   height: 48px;
-  background-color: alias.$tableBg;
 }
 
 .currentDate {
@@ -16,4 +20,21 @@
 }
 .icon {
   cursor: pointer;
+}
+
+//
+.dayNameContainer {
+  display: flex;
+  height: 21px;
+}
+
+.dayItem {
+  flex: 1;
+  text-align: center;
+  background-color: alias.$dayBg;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: alias.$day;
 }

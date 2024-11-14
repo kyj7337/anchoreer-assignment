@@ -11,6 +11,8 @@ interface CalendarHeaderProps {
   setCurrentDate: Dispatch<SetStateAction<Date>>;
 }
 
+const days = ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'];
+
 type Direction = 'prev' | 'next';
 
 export default function CalendarHeader(props: CalendarHeaderProps) {
@@ -21,16 +23,22 @@ export default function CalendarHeader(props: CalendarHeaderProps) {
     const newValue = dateCalculationfunc(currentDate, {
       months: 1,
     });
-
     setCurrentDate(newValue);
   };
   return (
     <header className={styles.headerContainer}>
-      <img src={leftIcon} className={styles.icon} onClick={() => onClickIcon('prev')} />
-
-      <div className={styles.currentDate}>{yearAndMonth}</div>
-
-      <img src={rightIcon} className={styles.icon} onClick={() => onClickIcon('next')} />
+      <div className={styles.navBar}>
+        <img src={leftIcon} className={styles.icon} onClick={() => onClickIcon('prev')} />
+        <div className={styles.currentDate}>{yearAndMonth}</div>
+        <img src={rightIcon} className={styles.icon} onClick={() => onClickIcon('next')} />
+      </div>
+      <div className={styles.dayNameContainer}>
+        {days.map((day) => (
+          <div className={styles.dayItem} key={day}>
+            <span>{day}</span>
+          </div>
+        ))}
+      </div>
     </header>
   );
 }
