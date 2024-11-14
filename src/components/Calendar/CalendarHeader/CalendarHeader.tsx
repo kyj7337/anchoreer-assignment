@@ -25,6 +25,7 @@ export default function CalendarHeader(props: CalendarHeaderProps) {
     });
     setCurrentDate(newValue);
   };
+
   return (
     <header className={styles.headerContainer}>
       <div className={styles.navBar}>
@@ -39,6 +40,7 @@ export default function CalendarHeader(props: CalendarHeaderProps) {
           </div>
         ))}
       </div>
+      <div>현재 주 표시</div>
     </header>
   );
 }
