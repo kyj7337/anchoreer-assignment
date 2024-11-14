@@ -1,5 +1,19 @@
+@use '@/style' as alias;
+
 .headerContainer {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 14px;
+  height: 48px;
+  background-color: alias.$tableBg;
+}
+
+.currentDate {
+  color: alias.$primary;
+  font-weight: bold;
+  font-size: 21px;
+}
+.icon {
+  cursor: pointer;
 }

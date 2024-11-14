@@ -1,0 +1,5 @@
+@use '@/style' as alias;
+
+.calendarContainer {
+  border: 1px solid alias.$borderColor;
+}

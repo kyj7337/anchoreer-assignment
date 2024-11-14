@@ -6,7 +6,7 @@ export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
   console.log(currentDate);
   return (
-    <div>
+    <div className={styles.calendarContainer}>
       <CalendarHeader currentDate={currentDate} setCurrentDate={setCurrentDate} />
     </div>
   );

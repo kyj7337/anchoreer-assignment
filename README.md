@@ -6,3 +6,4 @@
 - sass
 - date-fns
 - axios
+- zustand
