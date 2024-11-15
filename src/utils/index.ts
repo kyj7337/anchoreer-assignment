@@ -1,8 +1,15 @@
-import { format, startOfMonth, startOfWeek, addDays, isSameMonth } from 'date-fns';
+import { ProjectInfo } from '@/api/query/useGetJobList';
+import { format, startOfMonth, startOfWeek, addDays, isSameMonth, isSameDay } from 'date-fns';
 
 export const getYearAndMonthFromDate = (date: Date) => {
   return format(date, 'yyyy.MM');
 };
+
+export interface CalendarDateList {
+  date: Date;
+  day: number;
+  isCurrentMonth: boolean;
+}
 
 export const makeCalendarDateList = (currentDate: Date) => {
   const CALENDAR_TOTAL_DAY = 35;
@@ -16,7 +23,7 @@ export const makeCalendarDateList = (currentDate: Date) => {
     dates.push(tempCurrent);
     tempCurrent = addDays(tempCurrent, 1);
   }
-  const result = dates.map((date) => ({
+  const result: CalendarDateList[] = dates.map((date) => ({
     date,
     day: date.getDate(),
     isCurrentMonth: isSameMonth(currentDate, date),
@@ -30,4 +37,14 @@ export const sliceByCount = <T>(arr: T[], size: number): T[][] => {
     result.push(arr.slice(i, i + size));
   }
   return result;
+};
+
+export const sortByStartTime = (projects: ProjectInfo[], currentDate: Date): ProjectInfo[] => {
+  const startProjects: ProjectInfo[] = [];
+  const endProjects: ProjectInfo[] = [];
+  projects.forEach((elem) => {
+    if (isSameDay(elem.start_time, currentDate)) startProjects.push(elem);
+    else endProjects.push(elem);
+  });
+  return [...startProjects, ...endProjects];
 };
