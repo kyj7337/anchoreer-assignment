@@ -1,4 +1,4 @@
-import { makeCalendarDateList, sliceByCount } from '@/utils';
+import { addIdList, makeCalendarDateList, sliceByCount } from '@/utils';
 import { Fragment, useMemo, useState } from 'react';
 import styles from './CalendarBody.module.scss';
 import useGetJobList, { ProjectInfo } from '@/api/query/useGetJobList';
@@ -26,7 +26,7 @@ function CompanyNamePrefix({ text }: { text: '시' | '끝' }) {
 
 export default function CalendarBody(props: CalenderBodyProps) {
   const { currentDate } = props;
-  const { checkedProjectIds } = useProjectStore();
+  const { checkedProjectIds, setCheckedProjectIds } = useProjectStore();
   const calendarDateList = useMemo(
     () => sliceByCount(makeCalendarDateList(currentDate), 7),
     [currentDate]
@@ -36,6 +36,8 @@ export default function CalendarBody(props: CalenderBodyProps) {
   const { data, isLoading } = useGetJobList(calendarDateList);
 
   const onClickProjectName = (selectProject: ProjectInfo, totalProjects: ProjectInfo[]) => {
+    const newSelectedIds = addIdList(checkedProjectIds, selectProject.id);
+    setCheckedProjectIds(newSelectedIds);
     setSelectDaysProjects(totalProjects);
     setSelectProject(selectProject);
   };
@@ -57,6 +59,7 @@ export default function CalendarBody(props: CalenderBodyProps) {
                     <div className={styles.tableColumnProject}>
                       {day.projects.map((project) => {
                         const isStartEvent = isSameDay(project.start_time, day.date);
+                        const isOpened = checkedProjectIds.includes(project.id);
                         return (
                           <div
                             className={styles.tableCompanyRow}
@@ -64,7 +67,11 @@ export default function CalendarBody(props: CalenderBodyProps) {
                             onClick={() => onClickProjectName(project, day.projects)}
                           >
                             <CompanyNamePrefix text={isStartEvent ? '시' : '끝'} />
-                            <span className={styles.tableColumnCompanyName}>
+                            <span
+                              className={classNames(styles.tableColumnCompanyName, {
+                                [styles.opened]: isOpened,
+                              })}
+                            >
                               {project.company_name}
                             </span>
                           </div>

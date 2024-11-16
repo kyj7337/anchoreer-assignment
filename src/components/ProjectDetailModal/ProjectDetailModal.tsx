@@ -1,8 +1,11 @@
 import useGetJobList, { ProjectInfo } from '@/api/query/useGetJobList';
 import styles from './ProjectDetailModal.module.scss';
 import { Dispatch, ForwardedRef, forwardRef, MouseEvent, SetStateAction, useRef } from 'react';
-import { findPrevNextProject } from '@/utils';
+import { addIdList, findPrevNextProject } from '@/utils';
 import classNames from 'classnames';
+import ProjectDetailContent from './components/ProjectDetailContent/ProjectDetailContent';
+import useBodyScrollLock from '@/hooks/useBodyScrollLock';
+import { useProjectStore } from '@/_zustand/useProjectStore';
 interface ProjectDetailModalProps {
   selectProject?: ProjectInfo;
   setSelectProject: Dispatch<SetStateAction<ProjectInfo | undefined>>;
@@ -38,22 +41,25 @@ const Arrow = forwardRef((props: ArrowProps, ref: ForwardedRef<HTMLDivElement>) 
 
 export default function ProjectDetailModal(props: ProjectDetailModalProps) {
   const { setSelectDaysProjects, setSelectProject, selectDaysProjects, selectProject } = props;
+  const { checkedProjectIds, setCheckedProjectIds } = useProjectStore();
   const modalContentRef = useRef<HTMLDivElement>(null);
   const leftIconRef = useRef<HTMLDivElement>(null);
   const rightIconRef = useRef<HTMLDivElement>(null);
-
+  useBodyScrollLock(!!selectProject);
   const { prevProject, nextProject } = findPrevNextProject(selectDaysProjects, selectProject);
+
   const onClickArrow = (direction: ArrowDirection) => {
     const prevClickable = direction === 'prev' && !!prevProject;
     const nextClickable = direction === 'next' && !!nextProject;
     if (prevClickable) {
+      setCheckedProjectIds(addIdList(checkedProjectIds, prevProject.id));
       setSelectProject(prevProject);
     }
     if (nextClickable) {
+      setCheckedProjectIds(addIdList(checkedProjectIds, nextProject.id));
       setSelectProject(nextProject);
     }
   };
-
   const onClickOutSide = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as Node;
 
@@ -65,9 +71,12 @@ export default function ProjectDetailModal(props: ProjectDetailModalProps) {
     }
 
     if (!modalContentRef.current?.contains(target)) {
-      setSelectProject(undefined);
-      setSelectDaysProjects([]);
+      onClickClose();
     }
+  };
+  const onClickClose = () => {
+    setSelectProject(undefined);
+    setSelectDaysProjects([]);
   };
 
   if (selectProject) {
@@ -79,9 +88,11 @@ export default function ProjectDetailModal(props: ProjectDetailModalProps) {
           ref={leftIconRef}
           onClick={() => onClickArrow('prev')}
         />
-        <div ref={modalContentRef} className={styles.modalContents}>
-          {selectProject.company_name}
-        </div>
+        <ProjectDetailContent
+          project={selectProject}
+          ref={modalContentRef}
+          onClose={onClickClose}
+        />
         <Arrow
           direction='next'
           project={nextProject}

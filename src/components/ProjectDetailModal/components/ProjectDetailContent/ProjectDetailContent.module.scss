@@ -1,0 +1,63 @@
+@use '@/style' as alias;
+
+.modalContentContainer {
+  position: relative;
+  width: 700px;
+  min-height: 500px;
+  max-height: 90vh;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: auto;
+  padding-top: 36px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.infoContainer {
+  padding-left: 25px;
+  padding-bottom: 50px;
+}
+.companyName {
+  font-size: 18px;
+  color: #333333;
+
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.logo {
+  width: 30px;
+}
+
+.closeIcon {
+  width: 12px;
+  cursor: pointer;
+  position: absolute;
+  top: 28px;
+  right: 28px;
+}
+.projectTitle {
+  color: #333333;
+  font-size: 24px;
+
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.projectTime {
+  color: #777;
+  font-size: 14px;
+  padding-top: 7px;
+  font-weight: 400;
+}
+.projectDutyNames {
+  margin-top: 5px;
+  color: #ff6e70;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.projectDetailImg {
+  width: 100%;
+}

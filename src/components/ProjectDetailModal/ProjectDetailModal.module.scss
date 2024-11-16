@@ -13,15 +13,6 @@
   gap: 20px;
 }
 
-.modalContents {
-  min-width: 700px;
-  min-height: 500px;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 36px 10px 10px 10px;
-}
-
 .arrowContainer {
   position: relative;
   overflow: visible;
@@ -55,4 +46,6 @@
   color: #fff;
   white-space: pre-wrap;
   overflow-wrap: break-word;
+  position: absolute;
+  bottom: -50px;
 }

@@ -67,4 +67,7 @@
   font-size: 13px;
   line-height: 19px;
   cursor: pointer;
+  &.opened {
+    color: #999999;
+  }
 }

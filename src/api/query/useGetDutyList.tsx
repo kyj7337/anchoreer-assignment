@@ -3,7 +3,7 @@ import defaultAxios from '../config';
 
 const uri = '/api/v1/duties.json';
 
-interface DutyInfo {
+export interface DutyInfo {
   id: number;
   name: string;
   parent_id: null | number;
@@ -11,8 +11,12 @@ interface DutyInfo {
 
 const fetcher = () =>
   defaultAxios.get<DutyInfo[]>(uri).then(({ data }) => {
-    // TODO: 데이터 가공처리하기
-    return data;
+    return {
+      rawData: data,
+      etc: {
+        // TODO: 데이터 가공처리하기
+      },
+    };
   });
 
 /**

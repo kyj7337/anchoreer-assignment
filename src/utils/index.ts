@@ -1,3 +1,4 @@
+import { DutyInfo } from '@/api/query/useGetDutyList';
 import { ProjectInfo } from '@/api/query/useGetJobList';
 import { format, startOfMonth, startOfWeek, addDays, isSameMonth, isSameDay } from 'date-fns';
 
@@ -67,4 +68,27 @@ export const findPrevNextProject = (totalProject: ProjectInfo[], currentProject?
     nextProject,
     prevProject,
   };
+};
+
+export const getDutyNamesById = (ids: number[] | null, dutyList: DutyInfo[] | undefined) => {
+  if (dutyList && ids) {
+    const names = dutyList.reduce((result: string[], duty) => {
+      for (const id of ids) {
+        if (duty.id === id) {
+          return result.concat(duty.name);
+        }
+      }
+      return result;
+    }, []);
+
+    return names.join(', ');
+  }
+  return ``;
+};
+
+export const addIdList = (prevIdList: number[], selectId: number) => {
+  const addedList = prevIdList.concat(selectId);
+  const set = new Set();
+  addedList.forEach((e) => set.add(e));
+  return Array.from(set) as number[];
 };
