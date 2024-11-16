@@ -1,4 +1,4 @@
-import { useDutyStore } from '@/_zustand/useDutyStore';
+import { useProjectStore } from '@/_zustand/useProjectStore';
 
 export default function DutySelector() {
   //   const { dutyIds, setDutyIds } = useDutyStore();

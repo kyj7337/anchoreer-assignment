@@ -1,0 +1,58 @@
+@use '@/style' as alias;
+.modalContainer {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  //   padding: 0px 20px;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+}
+
+.modalContents {
+  min-width: 700px;
+  min-height: 500px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 36px 10px 10px 10px;
+}
+
+.arrowContainer {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  //   width: 64px;
+  &.hide {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.arrowBtn {
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  line-height: 59px;
+
+  &:hover {
+    background-color: alias.$primary;
+    border-radius: 50%;
+  }
+}
+
+.btnText {
+  font-size: 14px;
+  color: #fff;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}

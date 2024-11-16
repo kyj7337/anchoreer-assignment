@@ -48,3 +48,23 @@ export const sortByStartTime = (projects: ProjectInfo[], currentDate: Date): Pro
   });
   return [...startProjects, ...endProjects];
 };
+
+export const findPrevNextProject = (totalProject: ProjectInfo[], currentProject?: ProjectInfo) => {
+  let nextProject: ProjectInfo | null = null;
+  let prevProject: ProjectInfo | null = null;
+  for (let i = 0; i < totalProject.length; i++) {
+    if (totalProject[i].id === currentProject?.id) {
+      if (i !== 0) {
+        prevProject = totalProject[i - 1];
+      }
+      if (i !== totalProject.length - 1) {
+        nextProject = totalProject[i + 1];
+      }
+    }
+  }
+
+  return {
+    nextProject,
+    prevProject,
+  };
+};
